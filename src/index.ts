@@ -1,6 +1,11 @@
-export const sum = (a: number, b: number) => {
-  if ('development' === process.env.NODE_ENV) {
-    console.log('boop');
-  }
-  return a + b;
-};
+import { readOPPDBill } from './sites/oppd';
+import dotenv from 'dotenv';
+dotenv.config();
+
+(async () => {
+  const bills: Record<string, any> = {};
+
+  bills.oppd = await readOPPDBill();
+
+  console.log(bills);
+})();
