@@ -5,15 +5,21 @@ export const readOPPDBill = async () => {
   const page = await browser.newPage();
   await page.goto('https://myaccount.oppd.com/myaccount/logon');
 
-  const usernameField = await page.$x(
-    '/html/body/form/div[4]/div[2]/div[2]/div/div[1]/div/div[1]/div/div[1]/div[2]/div[1]/div[1]/input'
-  );
-  await usernameField[0].type(process.env.OPPD_USERNAME || '');
+  await page
+    .$x(
+      '/html/body/form/div[4]/div[2]/div[2]/div/div[1]/div/div[1]/div/div[1]/div[2]/div[1]/div[1]/input'
+    )
+    .then(usernameField =>
+      usernameField[0].type(process.env.OPPD_USERNAME || '')
+    );
 
-  const passwordField = await page.$x(
-    '/html/body/form/div[4]/div[2]/div[2]/div/div[1]/div/div[1]/div/div[1]/div[2]/div[1]/div[2]/input[1]'
-  );
-  await passwordField[0].type(process.env.OPPD_PASSWORD || '');
+  await page
+    .$x(
+      '/html/body/form/div[4]/div[2]/div[2]/div/div[1]/div/div[1]/div/div[1]/div[2]/div[1]/div[2]/input[1]'
+    )
+    .then(passwordField =>
+      passwordField[0].type(process.env.OPPD_PASSWORD || '')
+    );
 
   await page
     .$x(
@@ -24,13 +30,15 @@ export const readOPPDBill = async () => {
   // Wait for search results page to load
   await page.waitForNavigation({ waitUntil: 'load' });
 
-  const previousBill = await page.$x(
-    '/html/body/form/div[4]/div[2]/div[2]/div/div[1]/div/div[6]/div[3]/div/span[2]/strong/span'
-  );
+  const billValue = await page
+    .$x(
+      '/html/body/form/div[4]/div[2]/div[2]/div/div[1]/div/div[6]/div[3]/div/span[2]/strong/span'
+    )
+    .then(
+      async previousBill =>
+        await (await previousBill[0].getProperty('innerText')).jsonValue()
+    );
 
-  const billValue = await (
-    await previousBill[0].getProperty('innerText')
-  ).jsonValue();
   const billFloatValue = parseFloat((billValue as string).replace('$', ''));
 
   await page
