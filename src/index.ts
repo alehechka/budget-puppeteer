@@ -1,11 +1,15 @@
 import { readOPPDBill } from './sites/oppd';
 import dotenv from 'dotenv';
+import { readMUDBill } from './sites/mud';
 dotenv.config();
 
 (async () => {
-  const bills: Record<string, any> = {};
+  const [oppd, mud] = await Promise.all([readOPPDBill(), readMUDBill()]);
 
-  bills.oppd = await readOPPDBill();
+  const bills = {
+    oppd,
+    mud,
+  };
 
   console.log(bills);
 })();

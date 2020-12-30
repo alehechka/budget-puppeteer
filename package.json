@@ -20,7 +20,8 @@
     "analyze": "size-limit --why",
     "pregit": "git add *",
     "git": "git commit",
-    "postgit": "git push"
+    "postgit": "git push",
+    "scan": "node dist"
   },
   "peerDependencies": {},
   "husky": {
