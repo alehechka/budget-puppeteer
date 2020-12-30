@@ -1,6 +1,5 @@
-import { readOPPDBill } from './sites/oppd';
+import { readOPPDBill, readMUDBill } from './sites';
 import dotenv from 'dotenv';
-import { readMUDBill } from './sites/mud';
 dotenv.config();
 
 (async () => {
