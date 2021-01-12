@@ -53,8 +53,6 @@ export const readMUDBill = async () => {
 
   await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
-  await page.screenshot({ path: 'example.png' });
-
   await browser.close();
 
   return billFloatValue;

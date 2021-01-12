@@ -1,14 +1,12 @@
-import { readOPPDBill, readMUDBill } from './sites';
+// import { readOPPDBill, readMUDBill } from './sites';
+import { authorize, updateCells } from './sheets';
 import dotenv from 'dotenv';
 dotenv.config();
 
 (async () => {
-  const [oppd, mud] = await Promise.all([readOPPDBill(), readMUDBill()]);
+  const [oppd, mud] = [55, 66]; //await Promise.all([readOPPDBill(), readMUDBill()]);
+  const today = new Date().toLocaleDateString('en-US');
 
-  const bills = {
-    oppd,
-    mud,
-  };
-
-  console.log(bills);
+  var values = [[today, oppd, mud]];
+  authorize(updateCells, values);
 })();
